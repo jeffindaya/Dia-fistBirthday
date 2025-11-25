@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dia's Celebration</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.birds.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #8a4fff; /* Sofia's purple */
+            --secondary-color: #ff6bcb; /* Sofia's pink */
+            --accent-color: #ffd166; /* Sofia's gold */
+            --text-color: #333;
+            --light-text: #666;
+            --white: #fff;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            --royal-gradient: linear-gradient(135deg, #8a4fff 0%, #ff6bcb 100%);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: #f9f6f9;
+            overflow-x: hidden;
+        }
+
+        /* Sofia the First themed background layer */
+        .bg-sofia-anim {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 214, 102, 0.1) 100%);
+        }
+
+        .bg-sofia-anim .symbol {
+            position: absolute;
+            opacity: 0.18;
+            font-size: 1.35rem;
+            animation: driftUpBody linear infinite;
+            filter: drop-shadow(0 3px 3px rgba(0,0,0,0.2));
+            text-shadow: 0 0 7px rgba(255,255,255,0.6), 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        @keyframes driftUpBody {
+            0% { transform: translateY(40px) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.12; }
+            100% { transform: translateY(-110vh) translateX(25px) rotate(8deg); opacity: 0; }
+        }
+
+        h1, h2, h3 {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--royal-gradient);
+            border-radius: 3px;
+        }
+
+        /* Header & Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: url(./new-banner.JPG) no-repeat right 60% center / cover;
+            color: var(--white);
+            color: #333;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(138, 79, 255, 0.2) 0%, rgb(206 102 170 / 21%) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+                left: 150px;
+            padding-bottom: 30px;
+            width: 100%;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .baby-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--white);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            animation: gentlePulse 3s infinite ease-in-out;
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 10px;
+            animation: slideDown 1s ease-out;
+            background: var(--royal-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            animation: slideUp 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            z-index: 1;
+            opacity: 0.7;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .floating-element:nth-child(2n) {
+            animation-duration: 8s;
+            animation-delay: 1s;
+        }
+
+        .floating-element:nth-child(3n) {
+            animation-duration: 10s;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(10px) rotate(-5deg); }
+        }
+
+        /* Sofia-themed floating symbols */
+        .sofia-anim {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .sofia-anim .symbol {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.18;
+            animation: driftUp linear infinite;
+            filter: drop-shadow(0 3px 3px rgba(0,0,0,0.15));
+            text-shadow: 0 0 6px rgba(255,255,255,0.6), 0 2px 3px rgba(0,0,0,0.15);
+        }
+
+        @keyframes driftUp {
+            0% { transform: translateY(20px) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.12; }
+            100% { transform: translateY(-110vh) translateX(20px) rotate(10deg); opacity: 0; }
+        }
+
+        /* Generic per-section animation layer */
+        .section-anim {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .section-anim .symbol {
+            position: absolute;
+            font-size: 1.2rem;
+            opacity: 0.16;
+            animation: driftUp linear infinite;
+            filter: drop-shadow(0 3px 3px rgba(0,0,0,0.12));
+            text-shadow: 0 0 6px rgba(255,255,255,0.55), 0 2px 3px rgba(0,0,0,0.12);
+        }
+
+        /* Event Details */
+        .event-details {
+            background-color: var(--white);
+        }
+
+        .details-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .detail-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 25px;
+            width: 300px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .detail-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .detail-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .detail-card:hover i {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .detail-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .detail-card p {
+            color: var(--light-text);
+        }
+
+        .map-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .map-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .map-link:hover::after {
+            width: 100%;
+        }
+
+        /* Venue & Reception Section */
+        .venue-reception {
+            background: linear-gradient(135deg, #f8f4ff 0%, #f0e8ff 100%);
+            padding: 80px 20px;
+            text-align: center;
+        }
+        
+        .venue-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            justify-content: center;
+        }
+        
+        .venue-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 5px solid var(--primary-color);
+        }
+        
+        .venue-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .venue-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .venue-card h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-size: 1.5rem;
+        }
+        
+        .venue-card p {
+            margin: 4px 0;
+            color: #555;
+        }
+        
+        .map-frame {
+            margin-top: 10px;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .map-frame iframe {
+            width: 100%;
+            height: 220px;
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .venue-reception {
+                padding: 50px 15px;
+            }
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Dress Code Section */
+        .dress-code {
+            text-align: center;
+            padding: 80px 10%;
+            background: linear-gradient(135deg, #fff4f8 0%, #ffe8f0 100%);
+            color: #3a2c25;
+        }
+        
+        .dress-code h2 {
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        
+        .dress-code p {
+            margin: 0 auto;
+            color: #5b4b43;
+            line-height: 1.6;
+        }
+
+        /* Dress code image responsiveness */
+        .dress-container img.dresscode-img {
+            width: 50%;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .color-palette {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        
+        .color-card {
+            width: 130px;
+            height: 130px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .color-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .color-card span {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        /* Sofia-themed colors */
+        .purple { background-color: #8a4fff; }
+        .pink { background-color: #ff6bcb; }
+        .gold { background-color: #ffd166; }
+        .light-purple { background-color: #d8c2ff; }
+        .white { background-color: #FAFAFA; border: 1px solid #ddd; }
+        
+        @media (max-width: 600px) {
+            .color-card {
+                width: 100px;
+                height: 100px;
+            }
+            .dress-container img.dresscode-img {
+                width: 100%;
+            }
+        }
+
+        /* RSVP Section */
+        .rsvp {
+            background: linear-gradient(135deg, #fffaf0 0%, #fff0e8 100%);
+            text-align: center;
+        }
+
+        .rsvp-form {
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+
+        .rsvp-form.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(138, 79, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--royal-gradient);
+            color: var(--white);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Photo Gallery */
+        .gallery {
+            background: linear-gradient(135deg, #f8fff4 0%, #f0ffe8 100%);
+        }
+
+        .slider {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+
+        .slider.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 100%;
+            transition: all 0.5s ease;
+        }
+
+        .slide img {
+            width: 100%;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .slide:hover img {
+            transform: scale(1.02);
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .slider-dot:hover {
+            transform: scale(1.3);
+        }
+
+        .slider-dot.active {
+            background-color: var(--white);
+            transform: scale(1.3);
+        }
+
+        /* Closing Message */
+        .closing {
+            background: linear-gradient(135deg, #f4f8ff 0%, #e8f0ff 100%);
+            text-align: center;
+        }
+
+        .closing-container {
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+        }
+
+        .closing-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-info {
+            margin-top: 30px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--royal-gradient);
+            color: var(--white);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Music Player */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: var(--royal-gradient);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .music-player:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .music-player i {
+            font-size: 1.2rem;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .music-player:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Crown Decoration */
+        .crown-decoration {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: var(--accent-color);
+            z-index: 3;
+        }
+
+        .hero-content p {
+            color: #333;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+        
+        .hero-btn {
+            margin-top: 20px;
+            background: var(--royal-gradient);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .baby-photo-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .baby-photo {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--white);
+            box-shadow: var(--shadow);
+            animation: gentlePulse 3s infinite ease-in-out;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 4.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .detail-card {
+                width: 100%;
+            }
+            
+            .baby-photo {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .baby-photo {
+                width: 120px;
+                height: 120px;
+                border-width: 3px;
+            }
+        }
+        
+        #rsvp-bg {
+            position: relative;
+            z-index: 1;
+        }
+
+        .rsvp-form {
+            position: relative;
+            z-index: 2;
+        }
+        .music-player {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    background: var(--royal-gradient);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(138, 79, 255, 0.4);
+    transition: all 0.3s ease;
+    animation: pulse-glow 2s infinite;
+}
+
+.music-player:hover {
+    transform: scale(1.15) rotate(10deg);
+    box-shadow: 0 6px 25px rgba(138, 79, 255, 0.6);
+}
+
+.music-player i {
+    font-size: 1.5rem;
+    color: var(--white);
+    transition: all 0.3s ease;
+}
+
+.music-player:hover i {
+    transform: scale(1.2);
+}
+
+.music-pulse {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: pulse-ring 1.5s infinite;
+    pointer-events: none;
+}
+
+.music-tooltip {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.music-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    border: 6px solid transparent;
+    border-top-color: rgba(0,0,0,0.8);
+}
+
+.music-player:hover .music-tooltip {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(138, 79, 255, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 25px rgba(138, 79, 255, 0.8), 0 0 15px rgba(255, 107, 203, 0.6);
+    }
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.3);
+        opacity: 0;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Sofia the First themed background animation layer -->
+    <div class="bg-sofia-anim" id="bgSofiaAnim"></div>
+    
+    <!-- Header / Hero Section -->
+    <header class="hero" id="hero-bg">
+        <div class="crown-decoration">👑</div>
+        <div class="hero-content">
+            <div class="baby-photo-container">
+                <img src="./new-banner.JPG" alt="Dia's photo" class="baby-photo">
+            </div>
+            <h1>Dia Felize</h1>
+            <p>Join us for the magical first birthday of our little princess</p>
+            <p>Sunday, November 30, 2025</p>
+            <a href="#rsvp-bg" class="btn hero-btn">RSVP Now</a>
+        </div>
+        
+        <!-- Floating elements -->
+        <div class="floating-element" style="top: 20%; left: 10%; font-size: 4rem;">👑</div>
+        <div class="floating-element" style="top: 30%; right: 15%; font-size: 3.8rem;">✨</div>
+        <div class="floating-element" style="bottom: 40%; left: 15%; font-size: 4.2rem;">🦄</div>
+        <div class="floating-element" style="bottom: 30%; right: 10%; font-size: 2.5rem;">💜</div>
+        
+        <!-- Sofia themed animation layer -->
+        <div class="sofia-anim" id="sofiaAnim"></div>
+    </header>
+
+    <!-- Venue & Reception Section -->
+    <section class="venue-reception" id="venue">
+        <div class="container">
+            <h2 class="section-title">Venue</h2>
+            <div class="venue-container">
+                <!-- Reception -->
+                <div class="venue-card">
+                    <i class="fas fa-glass-cheers"></i>
+                    <p class="venue-name">Lovelibee Resort Function Hall</p>
+                    <p class="venue-address">Purok 5, Legaspi City</p>
+                    <p class="venue-time"><strong>3:30PM </strong></p>
+                    <a href="https://maps.app.goo.gl/gF44QfXLLo4v2f1E7" class="map-link" target="_blank">View Venue on Map</a>
+                    <div class="map-frame">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4547.999985661004!2d123.7507159188342!3d13.154766926366179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a101068357c6d3%3A0x25108154bb3e6108!2sLovelibee%20Resort%20Hotel%20and%20Swimming%20Pool!5e0!3m2!1sen!2sph!4v1764073011933!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-anim" id="anim-venue"></div>
+    </section>
+
+    <!-- Dress Code Section -->
+    <section class="dress-code" id="dresscode">
+        <div class="container">
+            <h2 class="section-title">Dress Code</h2>
+            <div class="dress-container">
+                <p>We invite everyone to join our royal celebration in Sofia the First inspired colors - purples, pinks, golds and light pastels!</p>
+                <div>
+                    <img class="dresscode-img" src="./new-dressCode.png" alt="">
+                </div>
+                
+                <div class="color-palette">
+                    <div class="color-card purple">
+                        <span>Royal Purple</span>
+                    </div>
+                    <div class="color-card pink">
+                        <span>Princess Pink</span>
+                    </div>
+                    <div class="color-card gold">
+                        <span>Golden Accent</span>
+                    </div>
+                    <div class="color-card light-purple">
+                        <span>Light Lavender</span>
+                    </div>
+                    <div class="color-card white">
+                        <span>Pearl White</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-anim" id="anim-dress"></div>
+    </section>
+
+    <!-- RSVP Section -->
+    <section class="rsvp" id="rsvp-bg">
+        <div class="container">
+            <h2 class="section-title"> RSVP</h2>
+            <p><strong>Kindly respond by November 27, 2025</strong></p><br>
+            <p style="font-size: 12px;"><i>💖We have lovingly kept this celebration intimate, reserved for our closest family and friends. Unless otherwise noted, this invitation is meant especially for those addressed. We are deeply grateful for your kind understanding.</i></p><br>
+            <form class="rsvp-form" id="rsvpForm">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" name="guests" placeholder="Number of Guests Including You" min="1" max="3" required>
+                </div>
+                <div class="form-group">
+                    <select name="attending" required>
+                        <option value="" disabled selected>Will you attend the birthday party?</option>
+                        <option value="yes">Yes, I'll be there!</option>
+                        <option value="no">Sorry, can't make it</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                   <textarea name="message" placeholder="Message (Optional)" rows="2"></textarea>
+                </div>
+                <button type="submit" class="btn">Submit Response</button> 
+            </form>
+        </div>
+        <div class="section-anim" id="anim-rsvp"></div>
+    </section>
+
+    <!-- Photo Gallery -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <h2 class="section-title"> Gallery</h2>
+            <div class="slider">
+                <div class="slides">
+                    <div class="slide">
+                        <img src="./DSC_9686.jpg" alt="Newborn Dia">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_9487.jpg" alt="Newborn Dia">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_1612.jpg" alt="Newborn Dia">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_1618.jpg" alt="Family Photo">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_1619.jpg" alt="First Smile">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_1639.jpg" alt="With Parents">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_1882.jpg" alt="Photo 4">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_1681.jpg" alt="Photo 5">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_1674.jpg" alt="Photo 6">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_1688.jpg" alt="Photo 7">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_9684.jpg" alt="Photo 8">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_9771.jpg" alt="Photo 9">
+                    </div>
+                    <div class="slide">
+                        <img src="./DSC_9737.jpg" alt="Photo 9">
+                    </div>
+                </div>
+                <div class="slider-nav">
+                    <div class="slider-dot active"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                    <div class="slider-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="section-anim" id="anim-gallery"></div>
+
+    <!-- Closing Message -->
+    <section class="closing" id="closing">
+        <div class="container">
+            <h2 class="section-title"> Thank You</h2>
+            <div class="closing-container">
+                <p>We're so excited to celebrate this magical milestone with the people we love most. Having you with us to honor Dia's first year means the world to us.
+
+Today isn't just about celebrating her first birthday - it's about the love, joy, and wonderful memories we've shared this past year, and the many more to come.
+                </p>
+                <div class="contact-info">
+                    <p>With love,</p>
+                    <p>The Indaya Family</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="section-anim" id="anim-closing"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Made with <i class="fas fa-heart" style="color: #ffd166;"></i> for Dia's Day</p>
+        </div>
+    </footer>
+
+    <!-- Music Player -->
+  <div class="music-player" id="musicPlayer" aria-label="Toggle background music">
+    <i class="fas fa-music"></i>
+    <div class="music-pulse"></div>
+    <div class="music-tooltip">Click to play music</div>
+    <audio id="backgroundMusic" loop>
+      <source src="./Sofia.mp3" type="audio/mpeg">
+    </audio>
+</div>
+      
+    <!-- Music notification -->
+    <div class="music-notification" id="musicNotification" style="
+        position: fixed;
+        bottom: 80px;
+        right: 20px;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+        z-index: 1000;
+    ">Background music is playing. Click the music note to control.</div>
+
+    <script>
+        // Initialize EmailJS (v4)
+        (function(){
+            emailjs.init({
+                publicKey: 'b10khW3q3vmXO3pol',
+            });
+        })();
+
+        const musicPlayer = document.getElementById('musicPlayer');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const musicNotification = document.getElementById('musicNotification');
+        let isPlaying = false;
+        let userInteracted = false;
+
+        // Show notification function
+        function showNotification(message) {
+            musicNotification.textContent = message;
+            musicNotification.style.display = 'block';
+            setTimeout(() => {
+                musicNotification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Initialize music - don't try to autoplay
+        musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
+        showNotification("Click the music note to start background music.");
+
+        // Toggle play/pause on click
+        musicPlayer.addEventListener('click', () => {
+            if (!userInteracted) {
+                // First interaction - try to play
+                backgroundMusic.play()
+                .then(() => {
+                    isPlaying = true;
+                    userInteracted = true;
+                    musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+                    showNotification("Music is playing.");
+                })
+                .catch(error => {
+                    console.error("Playback failed:", error);
+                    showNotification("Could not play music. Please interact with the page first.");
+                });
+            } else {
+                // Subsequent interactions - toggle play/pause
+                if (isPlaying) {
+                    backgroundMusic.pause();
+                    musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
+                    showNotification("Music paused. Click to play again.");
+                } else {
+                    backgroundMusic.play();
+                    musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+                    showNotification("Music is playing.");
+                }
+                isPlaying = !isPlaying;
+            }
+            
+        });
+        
+        
+        // Photo Gallery Slider
+        let photoSlideIndex = 0;
+        const photoSlides = document.querySelectorAll('.slide');
+        const photoDots = document.querySelectorAll('.slider-dot');
+
+        function showPhotoSlide(n) {
+            photoSlideIndex = (n + photoSlides.length) % photoSlides.length;
+            document.querySelector('.slides').style.transform = `translateX(-${photoSlideIndex * 100}%)`;
+            
+            photoDots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === photoSlideIndex);
+            });
+        }
+
+        photoDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showPhotoSlide(index));
+        });
+
+        // Auto slide for photo gallery
+        setInterval(() => {
+            showPhotoSlide(photoSlideIndex + 1);
+        }, 5000);
+
+        // Scroll animations
+        function checkVisibility() {
+            const elements = document.querySelectorAll('.detail-card, .venue-card, .rsvp-form, .slider, .countdown-item, .closing-container');
+            
+            elements.forEach(element => {
+                const position = element.getBoundingClientRect();
+                
+                if(position.top < window.innerHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', checkVisibility);
+        window.addEventListener('load', checkVisibility);
+
+        // Create floating bubbles
+        function createBubbles() {
+            const hero = document.getElementById('hero-bg');
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                const size = Math.random() * 30 + 10;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.animationDuration = `${Math.random() * 10 + 10}s`;
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                hero.appendChild(bubble);
+            }
+        }
+
+        // Initialize effects
+        createBubbles();
+
+        // Sofia themed symbols (crown, unicorn, sparkles, heart)
+        (function createSofiaSymbols() {
+            const layer = document.getElementById('sofiaAnim');
+            if (!layer) return;
+            const symbols = ['👑','🦄','✨','💜'];
+            const total = 16;
+            for (let i = 0; i < total; i++) {
+                const el = document.createElement('div');
+                el.className = 'symbol';
+                el.textContent = symbols[i % symbols.length];
+                const left = Math.random() * 100;
+                const size = Math.random() * 1.2 + 0.8; // 0.8x to 2.0x
+                const duration = Math.random() * 10 + 16; // 16s - 26s
+                const delay = Math.random() * 8; // 0 - 8s
+                el.style.left = `${left}%`;
+                el.style.bottom = `-40px`;
+                el.style.fontSize = `${size}rem`;
+                el.style.animationDuration = `${duration}s`;
+                el.style.animationDelay = `${delay}s`;
+                layer.appendChild(el);
+            }
+        })();
+
+        // Global body background symbols
+        (function createGlobalSofiaSymbols() {
+            const layer = document.getElementById('bgSofiaAnim');
+            if (!layer) return;
+            const symbols = ['👑','🦄','✨','💜'];
+            const total = 44; // increase density
+            for (let i = 0; i < total; i++) {
+                const el = document.createElement('div');
+                el.className = 'symbol';
+                el.textContent = symbols[i % symbols.length];
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const size = Math.random() * 1.4 + 0.9; // 0.9rem - 2.3rem
+                const duration = Math.random() * 16 + 20; // 20s - 36s
+                const delay = Math.random() * 10; // 0 - 10s
+                const op = Math.random() * 0.18 + 0.10; // 0.10 - 0.28
+                el.style.left = `${left}%`;
+                el.style.top = `${top}%`;
+                el.style.fontSize = `${size}rem`;
+                el.style.animationDuration = `${duration}s`;
+                el.style.animationDelay = `${delay}s`;
+                el.style.opacity = op.toString();
+                layer.appendChild(el);
+            }
+        })();
+
+        // Helper to create per-section animations with custom symbol sets
+        function createSectionSymbols(layerId, symbols, total) {
+            const layer = document.getElementById(layerId);
+            if (!layer) return;
+            const count = total || 18;
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'symbol';
+                el.textContent = symbols[i % symbols.length];
+                const left = Math.random() * 100;
+                const bottom = -20 - Math.random() * 60;
+                const size = Math.random() * 1.1 + 0.8;
+                const duration = Math.random() * 10 + 18;
+                const delay = Math.random() * 8;
+                const op = Math.random() * 0.18 + 0.08;
+                el.style.left = `${left}%`;
+                el.style.bottom = `${bottom}px`;
+                el.style.fontSize = `${size}rem`;
+                el.style.animationDuration = `${duration}s`;
+                el.style.animationDelay = `${delay}s`;
+                el.style.opacity = op.toString();
+                layer.appendChild(el);
+            }
+        }
+
+        // Initialize per-section backgrounds
+        createSectionSymbols('anim-venue', ['👑','🦄','✨'], 20);
+        createSectionSymbols('anim-dress', ['💜','👑','✨'], 16);
+        createSectionSymbols('anim-rsvp', ['✉️','👑','✨'], 14);
+        createSectionSymbols('anim-gallery', ['📷','👑','💜'], 14);
+        createSectionSymbols('anim-closing', ['👑','🦄','✨'], 16);
+
+        // Form submission - send via EmailJS
+        (function() {
+            const form = document.getElementById('rsvpForm');
+            if (!form) return;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const SERVICE_ID = 'service_4pfr89n';
+            const TEMPLATE_ID = 'template_wgxu499';
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const nameVal = (form.querySelector('input[name="name"]').value || '').trim();
+                const guestsVal = (form.querySelector('input[name="guests"]').value || '').toString();
+                const attendingVal = (form.querySelector('select[name="attending"]').value || '').toString();
+                const messageVal = (form.querySelector('textarea[name="message"]').value || '').trim();
+
+                const payload = {
+                    name: nameVal,
+                    guests: guestsVal,
+                    attending: attendingVal,
+                    message: messageVal || '-',
+                    submittedAt: new Date().toISOString()
+                };
+
+                try {
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.textContent = 'Sending...';
+                    }
+
+                    if (!window.emailjs) throw new Error('EmailJS SDK not loaded');
+                    await emailjs.send(SERVICE_ID, TEMPLATE_ID, payload);
+
+                    alert('Thank you for your RSVP! Your response has been sent.');
+                    form.reset();
+                } catch (err) {
+                    console.error('RSVP submit error:', err);
+                    const detail = (err && (err.text || err.message)) ? `\nDetails: ${err.text || err.message}` : '';
+                    alert(`Sorry, there was a problem sending your RSVP. Please try again later.${detail}`);
+                } finally {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit Response';
+                    }
+                }
+            });
+        })();
+
+        // Initialize Vanta.js effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // RSVP section with BIRDS effect
+            VANTA.BIRDS({
+                el: "#hero-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                scale: 1.00,
+                scaleMobile: 1.00,
+                backgroundColor: 0xfffaf0,  // Light cream background
+                color1: 0xff6bcb,           // Sofia pink birds
+                color2: 0x8a4fff,           // Sofia purple birds
+                colorMode: "variance",      // Birds will have different colors
+                birdSize: 1.00,
+                wingSpan: 20.00,
+                speedLimit: 5.00,
+                separation: 50.00,
+                alignment: 30.00,
+                cohesion: 20.00,
+                quantity: 4.00
+            });
+        });
+    </script>
+</body>
+</html>

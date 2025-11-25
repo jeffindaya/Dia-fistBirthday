@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Autoplay Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #8a4fff 0%, #ff6bcb 100%);
+            color: white;
+        }
+        
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            color: #8a4fff;
+        }
+        
+        .status {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Music Autoplay Test</h1>
+    <div class="status" id="status">
+        Testing audio autoplay...
+    </div>
+    
+    <p>Click anywhere on the page if music doesn't start automatically</p>
+    
+    <!-- Music Player -->
+    <div class="music-player" id="musicPlayer">
+        <i class="fas fa-music"></i>
+    </div>
+    
+    <audio id="backgroundMusic" loop autoplay>
+        <!-- Replace with your actual audio file -->
+        <source src="https://assets.codepen.io/1468070/soft-piano-background.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const musicPlayer = document.getElementById('musicPlayer');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        const status = document.getElementById('status');
+        let isPlaying = false;
+
+        // Try to autoplay when page loads
+        backgroundMusic.play().then(() => {
+            isPlaying = true;
+            musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+            status.innerHTML = '✅ Music is playing automatically!';
+        }).catch(error => {
+            console.log("Autoplay blocked:", error);
+            musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
+            status.innerHTML = '❌ Autoplay blocked. Click anywhere on the page or the music button to start playback.';
+        });
+
+        // Toggle play/pause on click
+        musicPlayer.addEventListener('click', () => {
+            if (isPlaying) {
+                backgroundMusic.pause();
+                musicPlayer.innerHTML = '<i class="fas fa-music"></i>';
+                status.innerHTML = '⏸️ Music paused';
+            } else {
+                backgroundMusic.play();
+                musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+                status.innerHTML = '▶️ Music playing';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Also try to autoplay when user interacts with page
+        document.addEventListener('click', function initAudio() {
+            if (!isPlaying) {
+                backgroundMusic.play().then(() => {
+                    isPlaying = true;
+                    musicPlayer.innerHTML = '<i class="fas fa-pause"></i>';
+                    status.innerHTML = '✅ Music started after user interaction!';
+                });
+            }
+            document.removeEventListener('click', initAudio);
+        });
+    </script>
+</body>
+</html>
